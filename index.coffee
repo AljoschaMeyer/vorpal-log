@@ -1,5 +1,7 @@
 module.exports = (vorpal, options) ->
   logger =
+    filter: {}
+    formatters: {}
     doLog: (formatter, msg) ->
       if logger.filter formatter
         vorpal.session.log formatter.format msg
@@ -9,6 +11,12 @@ module.exports = (vorpal, options) ->
       else if typeof filter is 'number'
         logger.filter = (formatter) ->
           return formatter.level >= filter
+    addFormatter: (name, level, format) ->
+      logger.formatters[name] =
+        level: level
+        format: format
+      logger[name] = (msg) ->
+        logger.doLog logger.formatters[name], msg
 
   vorpal.logger = logger
 
