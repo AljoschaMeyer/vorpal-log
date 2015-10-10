@@ -2,6 +2,7 @@ chalk = require 'chalk'
 
 module.exports = (vorpal, options) ->
   logger =
+    options: options
     filter: {}
     formatters: {}
     doLog: (formatter, msg) ->

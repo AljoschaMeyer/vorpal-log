@@ -11,12 +11,23 @@ initVorpal = ->
   logger = vorpal.logger
 
 describe 'The vorpal-log extension', ->
+  beforeEach ->
+    vorpal = null
+    logger = null
+
   it 'adds a logger object to vorpal', ->
     vorpal = Vorpal()
     expect(vorpal.logger).not.toBeDefined()
     vorpal.use log
     expect(vorpal.logger).toBeDefined()
     expect(vorpal.logger).not.toBeNull()
+
+  it 'saves options as logger.options', ->
+    options = {foo: 'bar'}
+
+    vorpal = Vorpal()
+    vorpal.use log, options
+    expect(vorpal.logger.options).toBe options
 
 describe 'The logger object', ->
   beforeEach ->
