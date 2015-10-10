@@ -1,8 +1,8 @@
 {
   "name": "vorpal-log",
-  "version": "0.0.0",
-  "description": "Logging utility for vorpal.",
-  "main": "lib/index.js",
+  "version": "0.0.1",
+  "description": "Logging/Printing utility for vorpal.",
+  "main": "index.js",
   "scripts": {
     "test": "jasmine-node spec.coffee --coffee --matchall",
     "prepublish": "npm run compile",
@@ -26,9 +26,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "marked": "^0.3.5",
-    "marked-terminal": "^1.6.1",
-    "vorpal": "^1.3.9",
-    "winston": "^1.1.0"
+    "marked-terminal": "^1.6.1"
   },
   "devDependencies": {
     "jasmine-node": "^1.14.5",
