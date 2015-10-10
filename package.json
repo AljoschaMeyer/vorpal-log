@@ -1,6 +1,6 @@
 {
   "name": "vorpal-log",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Logging/Printing utility for vorpal.",
   "main": "index.js",
   "scripts": {
