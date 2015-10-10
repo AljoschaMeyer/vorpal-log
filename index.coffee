@@ -11,6 +11,16 @@ module.exports = (vorpal, options) ->
       else if typeof filter is 'number'
         logger.filter = (formatter) ->
           return formatter.level >= filter
+      else if typeof filter is 'string'
+        try
+          lvl = logger.formatters[filter].level
+          logger.filter = (formatter) ->
+            return formatter.level >= lvl
+        catch error
+          throw new TypeError 'Not the name of a formatter'
+      else
+        throw new TypeError 'filter must be a number, the name of a formatter, or a filter function'
+
     addFormatter: (name, level, format) ->
       logger.formatters[name] =
         level: level
@@ -57,4 +67,4 @@ module.exports = (vorpal, options) ->
   for name, formatter of defaultFormatters
     logger.addFormatter name, formatter.level, formatter.format
 
-  logger.setFilter 20
+  logger.setFilter 'info'

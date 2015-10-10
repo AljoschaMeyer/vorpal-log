@@ -34,7 +34,6 @@ describe 'The logger object', ->
   it 'has a default filter', ->
     expect(logger.filter).toBeDefined()
     expect(typeof logger.filter).toBe 'function'
-  # TODO check default filter is setFilter('info')
 
 describe 'The setFilter function', ->
   beforeEach ->
@@ -54,8 +53,18 @@ describe 'The setFilter function', ->
       for level in [-10..20]
         expect(logger.filter {level: level}).toBe(level >= f)
 
-  # TODO name to formatter
-  # TODO error else
+  it 'set logger.filter to a function returning whether the loglevel is greater then the level of the formatter, for a given name of a formatter', ->
+    logger.setFilter 'warn'
+    for level in [-10..60]
+      expect(logger.filter {level:level}).toBe(level >= logger.formatters['warn'].level)
+
+  it 'throws a TypeError when given string is not a valid name', ->
+    expect(logger.formatters['fkföwf']).not.toBeDefined()
+    try
+      logger.setFilter 'fkföwf'
+      expect(true).toBe false
+    catch error
+      expect(error instanceof TypeError).toBe true
 
 describe 'The addFormatter function', ->
   name = null
