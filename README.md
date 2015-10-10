@@ -62,7 +62,7 @@ E.g. `logger.setFilter('warn')` will only print messages via logger.warn, logger
 
 The following options passed by `vorpal.use(vorpalLogger, options)` are used:
 
-- none
+- `markdown`: if true, the default formatters will format the message as markdown, using [marked-terminal](https://github.com/mikaelbr/marked-terminal).
 
 #### Commands
 

@@ -1,11 +1,18 @@
 log = require './index'
 
 Vorpal = require 'vorpal'
+marked = require 'marked'
+TerminalRenderer = require 'marked-terminal'
+
+# Needed because too many vorpal emmiters are added otherwise
+require('events').EventEmitter.defaultMaxListeners = Infinity
 
 vorpal = null
 logger = null
 
 initVorpal = ->
+  vorpal = null
+  logger = null
   vorpal = Vorpal()
   vorpal.use log
   logger = vorpal.logger
@@ -110,3 +117,28 @@ describe 'The addFormatter function', ->
     logger[name](msg)
 
     expect(logger.doLog).toHaveBeenCalledWith logger.formatters[name], msg
+
+  describe 'The default formatters', ->
+    md = '# Foo\n**bar**'
+    beforeEach ->
+      initVorpal()
+
+    it 'render markdown if logger.options.markdown', ->
+      marked.setOptions {renderer: new TerminalRenderer()}
+      renderedMd = marked(md).slice(0, -2)
+      # check that md is not rendered if options.markdown isn't set
+      for name, formatter of logger.formatters
+        expect(formatter.format(md).indexOf md).not.toBe -1
+        expect(formatter.format(md).indexOf renderedMd).toBe -1
+
+      logger.options = {}
+      logger.options.markdown = false
+      # check that md is not rendered if options.markdown isn't true
+      for name, formatter of logger.formatters
+        expect(formatter.format(md).indexOf md).not.toBe -1
+        expect(formatter.format(md).indexOf renderedMd).toBe -1
+
+      logger.options.markdown = true
+      for name, formatter of logger.formatters
+        expect(formatter.format(md).indexOf md).toBe -1
+        expect(formatter.format(md).indexOf renderedMd).not.toBe -1

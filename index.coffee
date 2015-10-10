@@ -1,13 +1,25 @@
 chalk = require 'chalk'
+marked = require 'marked'
+TerminalRenderer = require 'marked-terminal'
 
 module.exports = (vorpal, options) ->
+  marked.setOptions {renderer: new TerminalRenderer()}
+
+  # renders md and removes the two trailing newlines
+  renderMD = (md) ->
+    mdParagraph = marked(md)
+    if mdParagraph.lastIndexOf '\n\n' is mdParagraph.length - 2
+      mdParagraph = mdParagraph.slice(0, -2)
+    return mdParagraph
+
   logger =
-    options: options
+    options: options ? {}
     filter: {}
     formatters: {}
     doLog: (formatter, msg) ->
       if logger.filter formatter
         vorpal.session.log formatter.format msg
+
     setFilter: (filter) ->
       if typeof filter is 'function'
         logger.filter = filter
@@ -51,30 +63,37 @@ module.exports = (vorpal, options) ->
     debug:
       level: 10
       format: (msg) ->
+        msg = renderMD msg if logger.options.markdown
         return "#{chalk.dim '[debug]'} #{msg}"
     log:
       level: 20
       format: (msg) ->
+        msg = renderMD msg if logger.options.markdown
         return msg
     info:
       level: 20
       format: (msg) ->
+        msg = renderMD msg if logger.options.markdown
         return "#{chalk.blue '[info]'} #{msg}"
     confirm:
       level:20
       format: (msg) ->
+        msg = renderMD msg if logger.options.markdown
         return "#{chalk.green '[confirmation]'} #{msg}"
     warn:
       level: 30
       format: (msg) ->
+        msg = renderMD msg if logger.options.markdown
         return "#{chalk.yellow '[warning]'} #{msg}"
     error:
       level: 40
       format: (msg) ->
+        msg = renderMD msg if logger.options.markdown
         return "#{chalk.red '[error]'} #{msg}"
     fatal:
       level: 50
       format: (msg) ->
+        msg = renderMD msg if logger.options.markdown
         return "#{chalk.bgRed '[fatal]'} #{msg}"
 
   for name, formatter of defaultFormatters

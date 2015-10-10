@@ -1,7 +1,7 @@
 vorpal = (require 'vorpal')()
 vorpalLog = require '../index'
 
-vorpal.use vorpalLog
+vorpal.use vorpalLog, {markdown: true}
   .delimiter 'vorpal-log demo $'
   .show()
 
@@ -12,8 +12,8 @@ vorpal.command 'log'
   .action (args, cb) ->
     logger.log ''
     logger.debug 'Log command called without arguments.'
-    logger.log 'Foo, bar, baz!'
-    logger.confirm 'You successfully ran the log command.'
+    logger.log '*Foo*, **bar**, `baz`!'
+    logger.confirm 'You successfully ran the `log` command.'
     logger.info 'It logs stuff.'
     logger.warn 'Careful with that axe, Eugene!'
     logger.error 'Something went wrong...'

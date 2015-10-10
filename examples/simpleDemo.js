@@ -6,15 +6,17 @@
 
   vorpalLog = require('../index');
 
-  vorpal.use(vorpalLog).delimiter('vorpal-log demo $').show();
+  vorpal.use(vorpalLog, {
+    markdown: true
+  }).delimiter('vorpal-log demo $').show();
 
   logger = vorpal.logger;
 
   vorpal.command('log').description('log some highly important information').action(function(args, cb) {
     logger.log('');
     logger.debug('Log command called without arguments.');
-    logger.log('Foo, bar, baz!');
-    logger.confirm('You successfully ran the log command.');
+    logger.log('*Foo*, **bar**, `baz`!');
+    logger.confirm('You successfully ran the `log` command.');
     logger.info('It logs stuff.');
     logger.warn('Careful with that axe, Eugene!');
     logger.error('Something went wrong...');
