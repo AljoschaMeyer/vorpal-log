@@ -78,6 +78,8 @@ Options:
 ##### logger.addFormatter(name, level, format)
 Creates a `logger[name]` function, which will log the result of `format(msg)` with loglevel `level`. Use this to add custom formatters.
 
+See `customFormatter` [here](https://github.com/AljoschaMeyer/vorpal-log/tree/master/examples) for a working, insightful and useful example.
+
 ##### logger.setFilter(filter)
 Takes either a custom filter function, a string, or a number.
 
