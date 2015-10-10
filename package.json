@@ -4,7 +4,7 @@
   "description": "Logging utility for vorpal.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jasmine-node . --coffee --matchall",
+    "test": "jasmine-node spec.coffee --coffee --matchall",
     "prepublish": "npm run compile",
     "compile": "coffee --compile index.coffee"
   },
