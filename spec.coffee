@@ -22,10 +22,19 @@ describe 'The logger object', ->
   beforeEach ->
     initVorpal()
 
+  it 'has default formatters', ->
+    expect(logger.debug).toBeDefined()
+    expect(logger.log).toBeDefined()
+    expect(logger.info).toBeDefined()
+    expect(logger.confirm).toBeDefined()
+    expect(logger.warn).toBeDefined()
+    expect(logger.error).toBeDefined()
+    expect(logger.fatal).toBeDefined()
+
   it 'has a default filter', ->
     expect(logger.filter).toBeDefined()
     expect(typeof logger.filter).toBe 'function'
-  # TODO chec default filter is setFilter('info')
+  # TODO check default filter is setFilter('info')
 
 describe 'The setFilter function', ->
   beforeEach ->

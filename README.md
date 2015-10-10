@@ -34,7 +34,26 @@ log-example~$ test
 
 ### Default Functionality
 
+Vorpal-log comes with the following predefined methods for logging:
+
+- `logger.debug(msg)` (loglevel 10)
+- `logger.log(msg)` (loglevel 20)
+- `logger.info(msg)` (loglevel 20)
+- `logger.confirm(msg)` (loglevel 20)
+- `logger.warn(msg)` (loglevel 30)
+- `logger.error(msg)` (loglevel 40)
+- `logger.fatal(msg)` (loglevel 50)
+
+Set the loglevel:
+
+`logger.setFilter(level)`
+
+E.g. `logger.setFilter('warn')` will only print messages via logger.warn, logger.error and logger.fatal.
+
 ### Customizing
+
+##### logger.addFormatter(name, level, format)
+Creates a `logger[name]` function, which will log the result of `format(msg)` with loglevel `level`. Use this to add custom formatters.
 
 ##### logger.setFilter(filter)
 Takes either a custom filter function, a string, or a number.
