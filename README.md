@@ -52,6 +52,8 @@ Vorpal-log comes with the following predefined methods for logging:
 - `logger.error(msg)` (loglevel 40)
 - `logger.fatal(msg)` (loglevel 50)
 
+`logger.printMsg(msg)` will always print the message wihout caring about the loglevel or formatting.
+
 Set the loglevel:
 
 `logger.setFilter(level)`

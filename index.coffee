@@ -36,6 +36,9 @@ module.exports = (vorpal, options) ->
       else
         throw new TypeError 'filter must be a number, the name of a formatter, or a filter function'
 
+    printMsg: (msg) ->
+      vorpal.session.log msg
+
     addFormatter: (name, level, format) ->
       logger.formatters[name] =
         level: level
