@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/AljoschaMeyer/vorpal-log#readme",
   "dependencies": {
+    "chalk": "^1.1.1",
     "vorpal": "^1.3.9",
     "winston": "^1.1.0"
   },

@@ -1,3 +1,5 @@
+chalk = require 'chalk'
+
 module.exports = (vorpal, options) ->
   logger =
     filter: {}
@@ -48,7 +50,7 @@ module.exports = (vorpal, options) ->
     debug:
       level: 10
       format: (msg) ->
-        return "[debug] #{msg}"
+        return "#{chalk.dim '[debug]'} #{msg}"
     log:
       level: 20
       format: (msg) ->
@@ -56,23 +58,23 @@ module.exports = (vorpal, options) ->
     info:
       level: 20
       format: (msg) ->
-        return "[info] #{msg}"
+        return "#{chalk.blue '[info]'} #{msg}"
     confirm:
       level:20
       format: (msg) ->
-        return "[confirmation] #{msg}"
+        return "#{chalk.green '[confirmation]'} #{msg}"
     warn:
       level: 30
       format: (msg) ->
-        return "[warning] #{msg}"
+        return "#{chalk.yellow '[warning]'} #{msg}"
     error:
       level: 40
       format: (msg) ->
-        return "[error] #{msg}"
+        return "#{chalk.red '[error]'} #{msg}"
     fatal:
       level: 50
       format: (msg) ->
-        return "[fatal] #{msg}"
+        return "#{chalk.bgRed '[fatal]'} #{msg}"
 
   for name, formatter of defaultFormatters
     logger.addFormatter name, formatter.level, formatter.format
