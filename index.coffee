@@ -2,6 +2,8 @@ chalk = require 'chalk'
 marked = require 'marked'
 TerminalRenderer = require 'marked-terminal'
 
+util = require 'util'
+
 module.exports = (vorpal, options) ->
   marked.setOptions {renderer: new TerminalRenderer()}
 
@@ -66,37 +68,65 @@ module.exports = (vorpal, options) ->
     debug:
       level: 10
       format: (msg) ->
-        msg = renderMD msg if logger.options.markdown
+        if typeof msg is 'string'
+          msg = renderMD msg if logger.options.markdown
+        else
+          msg = util.inspect msg
+
         return "#{chalk.dim '[debug]'} #{msg}"
     log:
       level: 20
       format: (msg) ->
-        msg = renderMD msg if logger.options.markdown
+        if typeof msg is 'string'
+          msg = renderMD msg if logger.options.markdown
+        else
+          msg = util.inspect msg
+
         return msg
     info:
       level: 20
       format: (msg) ->
-        msg = renderMD msg if logger.options.markdown
+        if typeof msg is 'string'
+          msg = renderMD msg if logger.options.markdown
+        else
+          msg = util.inspect msg
+
         return "#{chalk.blue '[info]'} #{msg}"
     confirm:
       level:20
       format: (msg) ->
-        msg = renderMD msg if logger.options.markdown
+        if typeof msg is 'string'
+          msg = renderMD msg if logger.options.markdown
+        else
+          msg = util.inspect msg
+
         return "#{chalk.green '[confirmation]'} #{msg}"
     warn:
       level: 30
       format: (msg) ->
-        msg = renderMD msg if logger.options.markdown
+        if typeof msg is 'string'
+          msg = renderMD msg if logger.options.markdown
+        else
+          msg = util.inspect msg
+
         return "#{chalk.yellow '[warning]'} #{msg}"
     error:
       level: 40
       format: (msg) ->
-        msg = renderMD msg if logger.options.markdown
+        if typeof msg is 'string'
+          msg = renderMD msg if logger.options.markdown
+        else
+          msg = util.inspect msg
+
         return "#{chalk.red '[error]'} #{msg}"
     fatal:
       level: 50
       format: (msg) ->
-        msg = renderMD msg if logger.options.markdown
+        if typeof msg is 'string'
+          msg = renderMD msg if logger.options.markdown
+        else
+          msg = util.inspect msg
+          
         return "#{chalk.bgRed '[fatal]'} #{msg}"
 
   for name, formatter of defaultFormatters
