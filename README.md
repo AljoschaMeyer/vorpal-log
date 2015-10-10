@@ -50,6 +50,21 @@ Set the loglevel:
 
 E.g. `logger.setFilter('warn')` will only print messages via logger.warn, logger.error and logger.fatal.
 
+#### Commands
+
+Vorpal-log adds the following (hidden) command, which simply delegates to `logger.setFilter`.
+
+```
+Usage: loglevel [options] <level>
+
+
+set the log level
+
+Options:
+
+  --help  output usage information
+```
+
 ### Customizing
 
 ##### logger.addFormatter(name, level, format)

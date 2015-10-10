@@ -30,6 +30,16 @@ module.exports = (vorpal, options) ->
 
   vorpal.logger = logger
 
+  vorpal.command 'loglevel <level>'
+    .description 'set the log level'
+    .hidden()
+    .action (args, cb) ->
+      try
+        logger.setFilter args.level
+      catch
+        logger.error "#{args.level} is not a valid loglevel."
+      cb()
+
   #
   #Default settings
   #
