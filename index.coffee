@@ -1,19 +1,8 @@
 chalk = require 'chalk'
-marked = require 'marked'
-TerminalRenderer = require 'marked-terminal'
 
 util = require 'util'
 
 module.exports = (vorpal, options) ->
-  marked.setOptions {renderer: new TerminalRenderer()}
-
-  # renders md and removes the two trailing newlines
-  renderMD = (md) ->
-    mdParagraph = marked(md)
-    if mdParagraph.lastIndexOf '\n\n' is mdParagraph.length - 2
-      mdParagraph = mdParagraph.slice(0, -2)
-    return mdParagraph
-
   logger =
     options: options ? {}
     filter: {}
@@ -69,7 +58,7 @@ module.exports = (vorpal, options) ->
       level: 10
       format: (msg) ->
         if typeof msg is 'string'
-          msg = renderMD msg if logger.options.markdown
+          msg = logger.options.preformat msg if logger.options.preformat?
         else
           msg = util.inspect msg
 
@@ -78,7 +67,7 @@ module.exports = (vorpal, options) ->
       level: 20
       format: (msg) ->
         if typeof msg is 'string'
-          msg = renderMD msg if logger.options.markdown
+          msg = logger.options.preformat msg if logger.options.preformat?
         else
           msg = util.inspect msg
 
@@ -87,16 +76,16 @@ module.exports = (vorpal, options) ->
       level: 20
       format: (msg) ->
         if typeof msg is 'string'
-          msg = renderMD msg if logger.options.markdown
+          msg = logger.options.preformat msg if logger.options.preformat?
         else
           msg = util.inspect msg
 
         return "#{chalk.blue '[info]'} #{msg}"
     confirm:
-      level:20
+      level: 20
       format: (msg) ->
         if typeof msg is 'string'
-          msg = renderMD msg if logger.options.markdown
+          msg = logger.options.preformat msg if logger.options.preformat?
         else
           msg = util.inspect msg
 
@@ -105,7 +94,7 @@ module.exports = (vorpal, options) ->
       level: 30
       format: (msg) ->
         if typeof msg is 'string'
-          msg = renderMD msg if logger.options.markdown
+          msg = logger.options.preformat msg if logger.options.preformat?
         else
           msg = util.inspect msg
 
@@ -114,7 +103,7 @@ module.exports = (vorpal, options) ->
       level: 40
       format: (msg) ->
         if typeof msg is 'string'
-          msg = renderMD msg if logger.options.markdown
+          msg = logger.options.preformat msg if logger.options.preformat?
         else
           msg = util.inspect msg
 
@@ -123,10 +112,10 @@ module.exports = (vorpal, options) ->
       level: 50
       format: (msg) ->
         if typeof msg is 'string'
-          msg = renderMD msg if logger.options.markdown
+          msg = logger.options.preformat msg if logger.options.preformat?
         else
           msg = util.inspect msg
-          
+
         return "#{chalk.bgRed '[fatal]'} #{msg}"
 
   for name, formatter of defaultFormatters

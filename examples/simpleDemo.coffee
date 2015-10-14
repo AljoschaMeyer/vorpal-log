@@ -1,7 +1,18 @@
 vorpal = (require 'vorpal')()
 vorpalLog = require '../index'
 
-vorpal.use vorpalLog, {markdown: true}
+# Example of how to use markdown rendering
+marked = require 'marked'
+TerminalRenderer = require 'marked-terminal'
+
+marked.setOptions {renderer: new TerminalRenderer()}
+
+vorpal.use vorpalLog, {preformat: (msg) ->
+  mdParagraph = marked(msg)
+  if mdParagraph.lastIndexOf '\n\n' is mdParagraph.length - 2
+    mdParagraph = mdParagraph.slice(0, -2)
+  return mdParagraph
+}
   .delimiter 'vorpal-log demo $'
   .show()
 

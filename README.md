@@ -52,7 +52,7 @@ Vorpal-log comes with the following predefined methods for logging:
 - `logger.error(msg)` (loglevel 40)
 - `logger.fatal(msg)` (loglevel 50)
 
-`logger.printMsg(msg)` will always print the message wihout caring about the loglevel or formatting.
+`logger.printMsg(msg)` will always print the message without caring about the loglevel or formatting.
 
 Set the loglevel:
 
@@ -64,7 +64,7 @@ E.g. `logger.setFilter('warn')` will only print messages via logger.warn, logger
 
 The following options passed by `vorpal.use(vorpalLogger, options)` are used:
 
-- `markdown`: if true, the default formatters will format the message as markdown, using [marked-terminal](https://github.com/mikaelbr/marked-terminal).
+- `preformat`: a function which is passed the message and which returns a string which should be logged instead by the default formatters. Could for example be used to render [marked](https://github.com/mikaelbr/marked-terminal).
 
 #### Commands
 
