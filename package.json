@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "jasmine-node": "^1.14.5",
-    "vorpal": "^1.3.9",
+    "vorpal": "^1.3.34",
     "marked": "^0.3.5",
     "marked-terminal": "^1.6.1"
   }

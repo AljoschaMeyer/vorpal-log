@@ -9,7 +9,10 @@ module.exports = (vorpal, options) ->
     formatters: {}
     doLog: (formatter, msg) ->
       if logger.filter formatter
-        vorpal.session.log formatter.format msg
+        if vorpal.activeCommand?
+          vorpal.activeCommand.log formatter.format msg
+        else
+          vorpal.log formatter.format msg
 
     setFilter: (filter) ->
       if typeof filter is 'function'
@@ -28,7 +31,10 @@ module.exports = (vorpal, options) ->
         throw new TypeError 'filter must be a number, the name of a formatter, or a filter function'
 
     printMsg: (msg) ->
-      vorpal.session.log msg
+      if vorpal.activeCommand?
+        vorpal.activeCommand.log msg
+      else
+        vorpal.log msg
 
     addFormatter: (name, level, format) ->
       logger.formatters[name] =
