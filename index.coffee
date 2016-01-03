@@ -7,6 +7,16 @@ module.exports = (vorpal, options) ->
     options: options ? {}
     filter: {}
     formatters: {}
+
+    printDate: () ->
+      if logger.options.disableprintDate is true
+        ''
+      else
+        date = new Date
+        normalisedDate = new Date(date - (date.getTimezoneOffset() * 60 * 1000))
+        chalk.grey('[' + normalisedDate.toISOString().replace(/T/, ' ').replace(/\..+/, '') + ']') + ' '
+
+
     doLog: (formatter, msg) ->
       if logger.filter formatter
         if vorpal.activeCommand?
@@ -68,7 +78,7 @@ module.exports = (vorpal, options) ->
         else
           msg = util.inspect msg
 
-        return "#{chalk.dim '[debug]'} #{msg}"
+        return "#{logger.printDate()}#{chalk.dim '[debug]'} #{msg}"
     log:
       level: 20
       format: (msg) ->
@@ -77,7 +87,7 @@ module.exports = (vorpal, options) ->
         else
           msg = util.inspect msg
 
-        return msg
+        return "#{logger.printDate()}#{msg}"
     info:
       level: 20
       format: (msg) ->
@@ -86,7 +96,7 @@ module.exports = (vorpal, options) ->
         else
           msg = util.inspect msg
 
-        return "#{chalk.blue '[info]'} #{msg}"
+        return "#{logger.printDate()}#{chalk.blue '[info]'} #{msg}"
     confirm:
       level: 20
       format: (msg) ->
@@ -95,7 +105,7 @@ module.exports = (vorpal, options) ->
         else
           msg = util.inspect msg
 
-        return "#{chalk.green '[confirmation]'} #{msg}"
+        return "#{logger.printDate()}#{chalk.green '[confirmation]'} #{msg}"
     warn:
       level: 30
       format: (msg) ->
@@ -104,7 +114,7 @@ module.exports = (vorpal, options) ->
         else
           msg = util.inspect msg
 
-        return "#{chalk.yellow '[warning]'} #{msg}"
+        return "#{logger.printDate()}#{chalk.yellow '[warning]'} #{msg}"
     error:
       level: 40
       format: (msg) ->
@@ -113,7 +123,7 @@ module.exports = (vorpal, options) ->
         else
           msg = util.inspect msg
 
-        return "#{chalk.red '[error]'} #{msg}"
+        return "#{logger.printDate()}#{chalk.red '[error]'} #{msg}"
     fatal:
       level: 50
       format: (msg) ->
@@ -122,7 +132,7 @@ module.exports = (vorpal, options) ->
         else
           msg = util.inspect msg
 
-        return "#{chalk.bgRed '[fatal]'} #{msg}"
+        return "#{logger.printDate()}#{chalk.bgRed '[fatal]'} #{msg}"
 
   for name, formatter of defaultFormatters
     logger.addFormatter name, formatter.level, formatter.format
