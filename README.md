@@ -64,6 +64,7 @@ E.g. `logger.setFilter('warn')` will only print messages via logger.warn, logger
 
 The following options passed by `vorpal.use(vorpalLogger, options)` are used:
 
+- `printDate`: If this is true, the default formatters begin each message with the current date.
 - `preformat`: a function which is passed the message and which returns a string which should be logged instead by the default formatters. Could for example be used to render [marked](https://github.com/mikaelbr/marked-terminal).
 
 #### Commands
