@@ -9,13 +9,12 @@ module.exports = (vorpal, options) ->
     formatters: {}
 
     printDate: () ->
-      if logger.options.disableprintDate is true
-        ''
-      else
+      if logger.options.printDate is true
         date = new Date
         normalisedDate = new Date(date - (date.getTimezoneOffset() * 60 * 1000))
-        chalk.grey('[' + normalisedDate.toISOString().replace(/T/, ' ').replace(/\..+/, '') + ']') + ' '
-
+        return chalk.grey('[' + normalisedDate.toISOString().replace(/T/, ' ').replace(/\..+/, '') + ']') + ' '
+      else
+        return ''
 
     doLog: (formatter, msg) ->
       if logger.filter formatter
